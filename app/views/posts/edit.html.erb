@@ -1,0 +1,8 @@
+<h1>Editing <%=h @post.title %></h1>
+
+<% form_for @post do |f| %>
+  <%= render :partial => "form", :locals => { :f => f } %>
+  <p>
+    <%= f.submit 'Update' %> or <%= link_to 'go back', @post %>
+  </p>
+<% end %>

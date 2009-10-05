@@ -1,0 +1,15 @@
+<%= render @post %>
+
+<div id="manage">
+  <%= link_to "Edit", [:edit, @post] %>
+</div>
+
+<h3>Comments</h3>
+
+<ol><%= render @post.comments.select(&:valid?) %></ol>
+
+<% form_for [@post, @comment] do |f| %>
+  <div><%= f.label :body, "New comment" %>
+    <%= f.text_area :body, :rows => 5, :columns => 40 %></div>
+  <div><%= f.submit "Say your mind" %></div>
+<% end %>
