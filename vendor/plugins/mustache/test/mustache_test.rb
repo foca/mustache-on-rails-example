@@ -13,11 +13,11 @@ class MustacheTest < Test::Unit::TestCase
   def test_complex_view
     assert_equal <<-end_complex, ComplexView.to_html
 <h1>Colors</h1>
-<ul>
-  <li><strong>red</strong></li>
-    <li><a href="#Green">green</a></li>
-    <li><a href="#Blue">blue</a></li>
-    </ul>
+  <ul>
+      <li><strong>red</strong></li>
+      <li><a href="#Green">green</a></li>
+      <li><a href="#Blue">blue</a></li>
+  </ul>
 end_complex
   end
 
@@ -98,14 +98,14 @@ end_partial
   end
 
   def test_classify
-    assert_equal 'TemplatePartial', Mustache.new.classify('template_partial')
+    assert_equal 'TemplatePartial', Mustache.classify('template_partial')
   end
 
   def test_underscore
-    assert_equal 'template_partial', Mustache.new.underscore('TemplatePartial')
+    assert_equal 'template_partial', Mustache.underscore('TemplatePartial')
   end
 
   def test_namespaced_underscore
-    assert_equal 'stat_stuff', Mustache.new.underscore('Views::StatStuff')
+    assert_equal 'stat_stuff', Mustache.underscore('Views::StatStuff')
   end
 end
