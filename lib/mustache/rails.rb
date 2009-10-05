@@ -28,7 +28,7 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
 
     result = mustache_class.new
     copy_instance_variables_to(result)
-    result.template_file = Rails.root.join("app", "views", template.path)
+    result.template_file = Rails.root.join("app", "templates", template.path)
     result.view          = @view
     result.controller    = result.view.controller
     result.request       = result.controller.request
