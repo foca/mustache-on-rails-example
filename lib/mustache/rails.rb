@@ -38,7 +38,8 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
   end
 
   def _mustache_class_from_template(template)
-    [template.base_path, template.name].compact.join("/").classify.constantize
+    const_name = [template.base_path, template.name].compact.join("/").classify
+    defined?(const_name) ? const_name.constantize : Mustache
   end
 end
 
