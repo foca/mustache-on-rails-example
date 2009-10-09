@@ -1,6 +1,15 @@
-{{# posts }}
-  <h2>{{ title }}</h2>
-  {{ body }}
-{{/ posts }}
+{{# posts? }}
+<ol>
+  {{# posts }}
+    <li>
+      <h2><a href="{{ url }}">{{ title }}</a></h2>
+      {{{ body }}}
+      <p><a href="{{ url }}">Continue reading…</a></p>
+    </li>
+  {{/ posts }}
+</ol>
+{{/ posts? }}
 
-<div><%= link_to 'New post', new_post_path %></div>
+<p class="admin">
+  <a href="{{ new_post_path }}">Write a new post</a>
+</p>

@@ -1,19 +1,31 @@
 class Posts::Show < Mustache::Rails
   def title
-    link_to @post.title, @post
+    @post.title
+  end
+
+  def url
+    url_for @post
   end
 
   def body
     simple_format @post.body
   end
 
-  def edit_link
-    link_to "Edit", [:edit, @post]
+  def edit_path
+    url_for [:edit, @post]
+  end
+
+  def comments?
+    not _valid_comments.empty?
   end
 
   def comments
-    @post.comments.select(&:valid?).map do |comment|
-      { :comment => simple_format(comment.body) }
+    _valid_comments.map do |comment|
+      { :comment => comment.body }
     end
+  end
+
+  def _valid_comments
+    @post.comments.reject(&:new_record?)
   end
 end
