@@ -42,4 +42,6 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
   end
 end
 
+ActiveSupport::Dependencies.load_paths << Rails.root.join("app", "views").to_s
+ActionController::Base.prepend_view_path(Rails.root.join("app", "templates").to_s)
 ActionView::Template.register_template_handler(:mustache, Mustache::Rails::TemplateHandler)
