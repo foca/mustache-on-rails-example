@@ -14,17 +14,17 @@ end
 
 class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
   def render(template, local_assigns, &block)
-    mustache = template.path.gsub(".html.mustache", "").classify.constantize
-    mustache.template_file = Rails.root.join("app", "templates", template.path)
+    mustache = _mustache_class_from_template(template)
+    mustache.template_file = template.filename
 
     returning mustache.new do |result|
-      copy_instance_variables_to(result)
+      _copy_instance_variables_to(result)
       result.view    = @view
       result[:yield] = @view.instance_variable_get(:@content_for_layout)
     end.to_html
   end
 
-  def copy_instance_variables_to(mustache)
+  def _copy_instance_variables_to(mustache)
     variables  = @view.controller.instance_variable_names
     variables -= %w(@template)
 
@@ -35,6 +35,10 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
     variables.each do |name|
       mustache.instance_variable_set(name, @view.controller.instance_variable_get(name))
     end
+  end
+
+  def _mustache_class_from_template(template)
+    [template.base_path, template.name].compact.join("/").classify.constantize
   end
 end
 
