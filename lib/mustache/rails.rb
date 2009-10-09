@@ -21,6 +21,7 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
       _copy_instance_variables_to(result)
       result.view    = @view
       result[:yield] = @view.instance_variable_get(:@content_for_layout)
+      result.context.update(local_assigns)
     end.to_html
   end
 
