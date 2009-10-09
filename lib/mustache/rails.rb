@@ -36,6 +36,15 @@ class Mustache::Rails::TemplateHandler < ActionView::TemplateHandler
     variables.each do |name|
       mustache.instance_variable_set(name, @view.controller.instance_variable_get(name))
     end
+
+    # If you're using an anonymous mustache, then you probably want
+    # +attr_reader+ declared for your instance variables, else there's no way
+    # you can access them on the template.
+    if mustache.class == Mustache
+      mustache.class.class_eval do
+        attr_reader *variables.map {|name| name.to_s.gsub(/^@/, '') }
+      end
+    end
   end
 
   def _mustache_class_from_template(template)
